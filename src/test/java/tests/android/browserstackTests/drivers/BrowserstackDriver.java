@@ -7,13 +7,13 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import tests.android.browserstackTests.config.BrowserstackConfig;
+import tests.android.browserstackTests.config.Config;
 
 import javax.annotation.Nonnull;
 import java.net.URL;
 
 public class BrowserstackDriver implements WebDriverProvider {
-        static BrowserstackConfig config = ConfigFactory.create(BrowserstackConfig.class);
+        static Config config = ConfigFactory.create(Config.class);
 
         @SneakyThrows
         @Nonnull

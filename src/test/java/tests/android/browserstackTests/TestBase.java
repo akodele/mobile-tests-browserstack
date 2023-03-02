@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import tests.android.browserstackTests.drivers.BrowserstackDriver;
+import tests.android.browserstackTests.drivers.MobileDriver;
 import tests.android.browserstackTests.helpers.Attach;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -15,7 +16,14 @@ class TestBase {
 
     @BeforeAll
     static void beforeAll() {
-        Configuration.browser = BrowserstackDriver.class.getName();
+        switch (System.getProperty("env")) {
+            case "android":
+                Configuration.browser = BrowserstackDriver.class.getName();
+                break;
+            case "mobile":
+                Configuration.browser = MobileDriver.class.getName();
+                break;
+        }
         Configuration.browserSize = null;
     }
 
@@ -29,11 +37,10 @@ class TestBase {
     void addAttachments() {
         String sessionId = sessionId().toString();
 
-//        Attach.screenshotAs("Last screenshot");
         Attach.pageSource();
 
         closeWebDriver();
 
-        Attach.addVideo(sessionId);
+        if (!System.getProperty("env").equals("mobile")) Attach.addVideo(sessionId);
     }
 }
